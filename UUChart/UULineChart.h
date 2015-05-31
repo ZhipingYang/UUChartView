@@ -41,5 +41,6 @@
 @property (nonatomic, retain) NSMutableArray *ShowMaxMinArray;
 
 -(void)strokeChart;
+-(void)strokeChartWithAnimationDurations:(NSArray *)animationDurations; // NSTimeInterval for every line
 
 @end
