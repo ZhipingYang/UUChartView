@@ -156,8 +156,12 @@
     _ShowHorizonLine = ShowHorizonLine;
 }
 
-
 -(void)strokeChart
+{
+    [self strokeChartWithAnimationDurations: nil];
+}
+
+-(void)strokeChartWithAnimationDurations:(NSArray *)animationDurations
 {
     for (int i=0; i<_yValues.count; i++) {
         NSArray *childAry = _yValues[i];
@@ -251,15 +255,21 @@
         }else{
             _chartLine.strokeColor = [UUGreen CGColor];
         }
+        
+        NSTimeInterval animationDuration = childAry.count *0.4f;
+        if( i < animationDurations.count ){
+            animationDuration = [animationDurations[i] floatValue];
+        }
+        
         CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        pathAnimation.duration = childAry.count*0.4;
+        pathAnimation.duration = animationDuration;
         pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         pathAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
         pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
         pathAnimation.autoreverses = NO;
         [_chartLine addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
         
-        _chartLine.strokeEnd = 1.0;
+        _chartLine.strokeEnd = 1.0f;
     }
 }
 
